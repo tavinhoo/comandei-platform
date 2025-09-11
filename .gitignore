@@ -1,0 +1,29 @@
+# Node
+node_modules/
+dist/
+dist-ssr/
+.cache/
+*.log
+
+# Java/Maven
+target/
+build/
+*.class
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Docker
+.env
+db_data/
+*.pid
+
+# Outros arquivos temporários
+*.tmp
+*.bak
