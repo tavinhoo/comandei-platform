@@ -27,3 +27,7 @@ db_data/
 # Outros arquivos temporários
 *.tmp
 *.bak
+
+# arquivo compartilhado entre os devs
+compose.dev.yml
+*.dev

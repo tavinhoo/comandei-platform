@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: cmdi-db
+    environment:
+      POSTGRES_DB: comandei
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  cmdi-api:
+    build: ./api
+    container_name: cmdi-api
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/comandei
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  cmdi-web:
+    build: ./web
+    container_name: cmdi-web
+    ports:
+      - "5173:5173"
+    depends_on:
+      - cmdi-api
+    volumes:
+      - /app/node_modules
+    develop:
+      watch:
+        - path: ./web/src
+          action: sync
+          target: /app/src
+        - path: ./web/public
+          action: sync
+          target: /app/public
+        - path: ./web/vite.config.ts
+          action: sync
+          target: /app/vite.config.ts
+        - path: ./web/package.json
+          action: rebuild
+          
+volumes:
+  db_data:
