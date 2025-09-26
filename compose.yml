@@ -10,6 +10,8 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - comandei-network
 
   cmdi-api:
     build: ./api
@@ -23,6 +25,14 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
+    networks:
+      - comandei-network
+    develop:
+      watch:
+        - path: ./api/src
+          action: rebuild
+        - path: ./api/pom.xml
+          action: rebuild
 
   cmdi-web:
     build: ./web
@@ -33,6 +43,8 @@ services:
       - cmdi-api
     volumes:
       - /app/node_modules
+    networks:
+      - comandei-network
     develop:
       watch:
         - path: ./web/src
@@ -49,3 +61,7 @@ services:
           
 volumes:
   db_data:
+
+networks:
+  comandei-network:
+    driver: bridge
