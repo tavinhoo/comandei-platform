@@ -1,14 +1,25 @@
 package com.comandei.models;
 
-public class User {
-    private int user_id;
-    private String user_name;
-    private String user_email;
-    private String user_password;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-    public User (String user_name, String user_email, String user_password) {
-        this.user_name = user_name;
-        this.user_email = user_email;
-        this.user_password = user_password;
+
+public abstract class User {
+
+    private int id;
+
+    private String name;
+    private String email;
+    private String password;
+
+    public User() {}
+
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 }
