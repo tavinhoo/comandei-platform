@@ -1,15 +1,21 @@
 services:
   postgres:
-    image: postgres:16
+    image: postgres:15
     container_name: cmdi-db
     environment:
       POSTGRES_DB: comandei
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     networks:
       - comandei-network
 
@@ -17,11 +23,13 @@ services:
     build: ./api
     container_name: cmdi-api
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/comandei
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cmdi-db:5432/comandei
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_FLYWAY_ENABLED: "false"
     ports:
       - "8080:8080"
     restart: unless-stopped
