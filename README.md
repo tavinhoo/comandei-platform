@@ -76,7 +76,7 @@ Exemplos de chamadas (genéricas)
 
 Observações de segurança e operações
 - Autenticação/autorizações: Spring Security + JWT (JJWT) — token em Authorization: Bearer <token>.
-- Senhas devem ser armazenadas em hash (BCrypt recomendado) — ver camada de segurança do projeto.
+- Senhas devem ser armazenadas em hash — ver camada de segurança do projeto.
 - Migrações de schema gerenciadas por Flyway.
 
 Onde olhar no código
