@@ -91,4 +91,4 @@ Contribuição
 - Executar testes localmente antes de submeter PRs.
 
 Licença
-- Repositório sem licença explícita (adicionar LICENSE se necessário).
+- Repositório sem licença explícita.
