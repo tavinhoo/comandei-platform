@@ -92,8 +92,3 @@ Contribuição
 
 Licença
 - Repositório sem licença explícita (adicionar LICENSE se necessário).
-
-Contato
-- Informar durante a apresentação onde localizar cada peça do projeto (paths citados acima).
-
-```// filepath:
