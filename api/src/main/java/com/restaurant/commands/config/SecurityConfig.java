@@ -46,11 +46,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login").permitAll()
                 .requestMatchers("/api/relatorios/**").hasRole("MANAGER")
-                .requestMatchers("/api/cardapio/**").hasRole("MANAGER")
-                .requestMatchers("/api/users/**").hasRole("MANAGER")
+                .requestMatchers("/api/comandas/**").permitAll()
+                .requestMatchers("/api/cardapio/**").permitAll()
+                .requestMatchers("/api/users/**").permitAll()
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

@@ -2,6 +2,7 @@ package com.restaurant.commands.web.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,8 +93,28 @@ public class CommandController {
     }
 
     @GetMapping("/abertas")
-    public ResponseEntity<List<Command>> listOpen() {
-        return ResponseEntity.ok(commandRepository.findByStatus(CommandStatus.OPEN));
+    public ResponseEntity<List<com.restaurant.commands.web.dto.CommandDto>> listOpen() {
+        List<Command> commands = commandRepository.findByStatus(CommandStatus.OPEN);
+        List<com.restaurant.commands.web.dto.CommandDto> dtos = commands.stream().map(cmd -> {
+            Long empId = null;
+            String empName = null;
+            if (cmd.getResponsibleEmployee() != null) {
+                empId = cmd.getResponsibleEmployee().getId();
+                empName = cmd.getResponsibleEmployee().getName();
+            }
+            return new com.restaurant.commands.web.dto.CommandDto(
+                    cmd.getId(),
+                    cmd.getTableNumber(),
+                    cmd.getStatus().name(),
+                    cmd.getTotalValue(),
+                    cmd.getOpenTime(),
+                    cmd.getCloseTime(),
+                    empId,
+                    empName
+            );
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
