@@ -38,6 +38,8 @@ public class Command {
     @Column(nullable = false)
     private Double totalValue = 0.0;
 
+    private String customerName;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsible_employee_id")
     private User responsibleEmployee;
@@ -106,6 +108,14 @@ public class Command {
 
     public void setTotalValue(Double totalValue) {
         this.totalValue = totalValue;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public User getResponsibleEmployee() {

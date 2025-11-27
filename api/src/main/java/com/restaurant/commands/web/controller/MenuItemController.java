@@ -36,10 +36,15 @@ public class MenuItemController {
     @PutMapping("/{id}")
     public ResponseEntity<MenuItem> update(@PathVariable Long id, @RequestBody MenuItem update) {
         return menuItemRepository.findById(id).map(item -> {
-            item.setName(update.getName());
-            item.setDescription(update.getDescription());
-            item.setPrice(update.getPrice());
-            item.setIsActive(update.getIsActive());
+            if (update.getName() != null)
+                item.setName(update.getName());
+            if (update.getDescription() != null)
+                item.setDescription(update.getDescription());
+            if (update.getPrice() != null)
+                item.setPrice(update.getPrice());
+            if (update.getIsActive() != null)
+                item.setIsActive(update.getIsActive());
+
             menuItemRepository.save(item);
             return ResponseEntity.ok(item);
         }).orElse(ResponseEntity.notFound().build());

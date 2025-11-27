@@ -12,11 +12,13 @@ public class CommandDto {
     private LocalDateTime closeTime;
     private Long responsibleEmployeeId;
     private String responsibleEmployeeName;
+    private String customerName;
 
     public CommandDto() {
     }
 
-    public CommandDto(Long id, Integer tableNumber, String status, Double totalValue, LocalDateTime openTime, LocalDateTime closeTime, Long responsibleEmployeeId, String responsibleEmployeeName) {
+    public CommandDto(Long id, Integer tableNumber, String status, Double totalValue, LocalDateTime openTime,
+            LocalDateTime closeTime, Long responsibleEmployeeId, String responsibleEmployeeName, String customerName) {
         this.id = id;
         this.tableNumber = tableNumber;
         this.status = status;
@@ -25,6 +27,7 @@ public class CommandDto {
         this.closeTime = closeTime;
         this.responsibleEmployeeId = responsibleEmployeeId;
         this.responsibleEmployeeName = responsibleEmployeeName;
+        this.customerName = customerName;
     }
 
     public Long getId() {
@@ -57,5 +60,13 @@ public class CommandDto {
 
     public String getResponsibleEmployeeName() {
         return responsibleEmployeeName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

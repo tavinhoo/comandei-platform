@@ -55,6 +55,7 @@ public class CommandController {
         cmd.setStatus(CommandStatus.OPEN);
         cmd.setOpenTime(LocalDateTime.now());
         cmd.setTotalValue(0.0);
+        cmd.setCustomerName(request.getCustomerName());
 
         Command saved = commandRepository.save(cmd);
         return ResponseEntity.ok(saved);
@@ -76,7 +77,8 @@ public class CommandController {
             double added = 0.0;
             for (OrderRequest r : requests) {
                 MenuItem item = menuItemRepository.findById(r.getMenuItemId()).orElse(null);
-                if (item == null) continue;
+                if (item == null)
+                    continue;
                 Order order = new Order();
                 order.setMenuItem(item);
                 order.setQuantity(r.getQuantity());
@@ -110,8 +112,8 @@ public class CommandController {
                     cmd.getOpenTime(),
                     cmd.getCloseTime(),
                     empId,
-                    empName
-            );
+                    empName,
+                    cmd.getCustomerName());
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok(dtos);
@@ -120,5 +122,14 @@ public class CommandController {
     @GetMapping("/{id}")
     public ResponseEntity<Command> get(@PathVariable Long id) {
         return commandRepository.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCommand(@PathVariable Long id) {
+        if (!commandRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        commandRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

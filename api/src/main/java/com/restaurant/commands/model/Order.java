@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Order {
 
     @Id
@@ -31,6 +32,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "command_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Command command;
 
     @ManyToOne(fetch = FetchType.LAZY)

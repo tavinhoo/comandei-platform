@@ -22,10 +22,13 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider tokenProvider;
+    private final com.restaurant.commands.repository.UserRepository userRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider) {
+    public AuthController(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider,
+            com.restaurant.commands.repository.UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/login")
@@ -35,7 +38,16 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
             String token = tokenProvider.generateToken(authentication);
-            return ResponseEntity.ok(new AuthResponse(token));
+
+            com.restaurant.commands.model.User user = userRepository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            return ResponseEntity.ok(new AuthResponse(
+                    token,
+                    user.getId(),
+                    user.getName(),
+                    user.getEmail(),
+                    "ROLE_" + user.getRole().name()));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(401).build();
         }

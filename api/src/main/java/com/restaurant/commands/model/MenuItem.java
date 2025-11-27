@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "menu_items")
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class MenuItem {
 
     @Id
@@ -32,6 +33,7 @@ public class MenuItem {
     private Boolean isActive = true;
 
     @OneToMany(mappedBy = "menuItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<Order> orders;
 
     public MenuItem() {

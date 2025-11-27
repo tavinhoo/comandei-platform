@@ -1,0 +1,134 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.landing-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+  padding: var(--spacing-4);
+}
+
+.landing-content {
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+}
+
+.logo-section {
+  margin-bottom: var(--spacing-8);
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.logo-icon {
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-4);
+}
+
+.app-title {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  margin-bottom: var(--spacing-2);
+  color: white;
+}
+
+.text-gradient {
+  color: var(--color-primary);
+  /* Simples destaque no ponto */
+}
+
+.app-subtitle {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xl);
+}
+
+.role-selection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-6);
+  margin-top: var(--spacing-8);
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+.role-card {
+  background: rgba(30, 41, 59, 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-8);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+  cursor: pointer;
+  width: 100%;
+}
+
+.role-card:hover {
+  transform: translateY(-5px);
+  background: rgba(30, 41, 59, 0.8);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+.icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 107, 0, 0.1);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-wrapper.secondary {
+  background: rgba(236, 72, 153, 0.1);
+  color: var(--color-secondary);
+}
+
+.role-card h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.role-card p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+}
+
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

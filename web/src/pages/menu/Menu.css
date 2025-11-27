@@ -1,0 +1,126 @@
+.cardapio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.menu-card {
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-4);
+  position: relative;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  min-height: 200px;
+}
+
+.menu-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-light);
+}
+
+.menu-card h3 {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-2);
+}
+
+.menu-card p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-4);
+}
+
+.price-tag {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-success);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+}
+
+.card-actions {
+  display: flex;
+  gap: var(--spacing-2);
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.btn-icon {
+  flex: 1 1 48%;
+  min-width: 120px;
+  max-width: 100%;
+  border: none;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.btn-icon.edit {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+}
+
+.btn-icon.edit:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-icon.delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+}
+
+.btn-icon.delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+
+@media (max-width: 480px) {
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .btn-icon {
+    flex: 1 1 100%;
+  }
+
+  .cardapio-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+  }
+}
+.page-header {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: var(--spacing-4); 
+  width: 100%;
+}
+
+.page-header h1 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
