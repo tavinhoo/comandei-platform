@@ -23,7 +23,7 @@ services:
   cmdi-api:
     build:
       context: ./api
-      target: dev
+      target: runtime
     container_name: cmdi-api
     depends_on:
       postgres:
@@ -35,56 +35,28 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
       SPRING_FLYWAY_ENABLED: "true"
       APP_JWT_SECRET: ${APP_JWT_SECRET}
-      APP_SEED_ENABLED: ${APP_SEED_ENABLED:-false}
-      APP_SEED_DEFAULT_PASSWORD: ${APP_SEED_DEFAULT_PASSWORD:-}
+      APP_SEED_ENABLED: "false"
     ports:
       - "8080:8080"
-    volumes:
-      - maven_cache:/root/.m2
     restart: unless-stopped
     networks:
       - comandei-network
-    develop:
-      watch:
-        - path: ./api/src
-          action: rebuild
-        - path: ./api/pom.xml
-          action: rebuild
 
   cmdi-web:
     build:
       context: ./web
-      target: dev
+      target: runtime
     container_name: cmdi-web
-    ports:
-      - "5173:5173"
     depends_on:
       - cmdi-api
-    volumes:
-      - web_node_modules:/app/node_modules
+    ports:
+      - "80:80"
     restart: unless-stopped
     networks:
       - comandei-network
-    develop:
-      watch:
-        - path: ./web/src
-          action: sync
-          target: /app/src
-        - path: ./web/public
-          action: sync
-          target: /app/public
-        - path: ./web/vite.config.ts
-          action: sync
-          target: /app/vite.config.ts
-        - path: ./web/package.json
-          action: rebuild
-        - path: ./web/package-lock.json
-          action: rebuild
 
 volumes:
   db_data:
-  maven_cache:
-  web_node_modules:
 
 networks:
   comandei-network:
