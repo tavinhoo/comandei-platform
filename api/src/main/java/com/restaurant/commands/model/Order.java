@@ -2,8 +2,12 @@ package com.restaurant.commands.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +28,7 @@ public class Order {
     private Integer quantity;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @Column(nullable = false)
@@ -31,6 +36,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "command_id")
+    @JsonBackReference
     private Command command;
 
     @ManyToOne(fetch = FetchType.LAZY)
