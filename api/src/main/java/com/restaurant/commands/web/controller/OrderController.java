@@ -13,6 +13,8 @@ import com.restaurant.commands.model.Order;
 import com.restaurant.commands.repository.OrderRepository;
 import com.restaurant.commands.web.dto.UpdateOrderStatusRequest;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/pedidos")
 public class OrderController {
@@ -24,7 +26,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @RequestBody UpdateOrderStatusRequest request) {
+    public ResponseEntity<Order> updateStatus(@PathVariable Long id, @Valid @RequestBody UpdateOrderStatusRequest request) {
         Optional<Order> found = orderRepository.findById(id);
         if (found.isEmpty()) return ResponseEntity.notFound().build();
         Order order = found.get();

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,6 +24,8 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider(@Value("${jwt.secret}") String secret,
                             @Value("${jwt.expirationMs}") long validityInMilliseconds) {
+        Assert.hasText(secret, "APP_JWT_SECRET must be configured");
+        Assert.isTrue(secret.length() >= 32, "APP_JWT_SECRET must be at least 32 characters long");
         this.secretKey = secret.getBytes(StandardCharsets.UTF_8);
         this.validityInMilliseconds = validityInMilliseconds;
     }
