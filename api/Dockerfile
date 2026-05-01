@@ -1,10 +1,24 @@
-FROM maven:4.0.0-rc-4-amazoncorretto-25-al2023 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+FROM maven:3.9.9-eclipse-temurin-17 AS deps
+WORKDIR /workspace
+COPY pom.xml .
+RUN mvn -B -q -DskipTests dependency:go-offline
 
-FROM amazoncorretto:25.0.0-alpine3.22
+FROM deps AS build
+COPY src ./src
+RUN mvn -B -q -DskipTests package
+
+FROM eclipse-temurin:17-jre-jammy AS runtime
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+RUN useradd --system --uid 1001 --create-home appuser
+COPY --from=build /workspace/target/*.jar /app/app.jar
+USER appuser
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/app.jar"]
+
+FROM maven:3.9.9-eclipse-temurin-17 AS dev
+WORKDIR /app
+COPY pom.xml .
+RUN mvn -B -q -DskipTests dependency:go-offline
+COPY src ./src
+EXPOSE 8080
+CMD ["mvn", "spring-boot:run"]
