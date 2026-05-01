@@ -1,7 +1,14 @@
 package com.restaurant.commands.web.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+
 public class OrderRequest {
+    @NotNull
     private Long menuItemId;
+
+    @NotNull
+    @Min(1)
     private Integer quantity;
 
     public OrderRequest() {
