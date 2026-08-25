@@ -8,14 +8,15 @@ public class CommandRequest {
     @Min(1)
     private Integer tableNumber;
 
-    @NotNull
+    private String customerName;
     private Long responsibleEmployeeId;
 
     public CommandRequest() {
     }
 
-    public CommandRequest(Integer tableNumber, Long responsibleEmployeeId) {
+    public CommandRequest(Integer tableNumber, String customerName, Long responsibleEmployeeId) {
         this.tableNumber = tableNumber;
+        this.customerName = customerName;
         this.responsibleEmployeeId = responsibleEmployeeId;
     }
 
@@ -25,6 +26,14 @@ public class CommandRequest {
 
     public void setTableNumber(Integer tableNumber) {
         this.tableNumber = tableNumber;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Long getResponsibleEmployeeId() {

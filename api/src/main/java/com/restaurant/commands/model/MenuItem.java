@@ -1,8 +1,10 @@
 package com.restaurant.commands.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,20 +29,20 @@ public class MenuItem {
 
     private String description;
 
-    @Column(nullable = false)
-    private Double price;
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
 
     @Column(nullable = false)
     private Boolean isActive = true;
 
-    @OneToMany(mappedBy = "menuItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
+    @OneToMany(mappedBy = "menuItem", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> orders;
 
     public MenuItem() {
     }
 
-    public MenuItem(Long id, String name, String description, Double price, Boolean isActive, List<Order> orders) {
+    public MenuItem(Long id, String name, String description, BigDecimal price, Boolean isActive, List<Order> orders) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -73,14 +75,15 @@ public class MenuItem {
         this.description = description;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
+    @JsonProperty("isActive")
     public Boolean getIsActive() {
         return isActive;
     }

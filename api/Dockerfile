@@ -13,7 +13,7 @@ RUN useradd --system --uid 1001 --create-home appuser
 COPY --from=build /workspace/target/*.jar /app/app.jar
 USER appuser
 EXPOSE 8080
-ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Duser.timezone=America/Sao_Paulo", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "/app/app.jar"]
 
 FROM maven:3.9.9-eclipse-temurin-17 AS dev
 WORKDIR /app

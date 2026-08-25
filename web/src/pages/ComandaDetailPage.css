@@ -1,0 +1,22 @@
+.order-status-select {
+    display: flex;
+    align-items: center;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.select-wrapper select {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.select-icon {
+    position: absolute;
+    right: 0.5rem;
+    pointer-events: none;
+    color: var(--text-muted);
+}

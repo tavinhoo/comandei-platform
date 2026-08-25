@@ -33,6 +33,9 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private Boolean active = true;
+
     public User() {
     }
 
@@ -42,6 +45,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.active = true;
     }
 
     public Long getId() {
@@ -82,5 +86,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

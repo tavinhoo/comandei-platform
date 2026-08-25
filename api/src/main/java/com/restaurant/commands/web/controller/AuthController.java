@@ -2,7 +2,6 @@ package com.restaurant.commands.web.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +29,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-            String token = tokenProvider.generateToken(authentication);
-            return ResponseEntity.ok(new AuthResponse(token));
-        } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(401).build();
-        }
+        String token = tokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 }

@@ -48,12 +48,14 @@ public class DatabaseSeeder implements CommandLineRunner {
         manager.setEmail("manager@app.com");
         manager.setPassword(passwordEncoder.encode(defaultPassword));
         manager.setRole(Role.MANAGER);
+        manager.setActive(true);
 
         User employee = new User();
         employee.setName("Employee");
         employee.setEmail("employee@app.com");
         employee.setPassword(passwordEncoder.encode(defaultPassword));
         employee.setRole(Role.EMPLOYEE);
+        employee.setActive(true);
 
         userRepository.saveAll(Arrays.asList(manager, employee));
         log.info("Default users seeded for local environment");

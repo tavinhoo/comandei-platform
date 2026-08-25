@@ -1,14 +1,23 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-// https://vite.dev/config/
+// VITE_API_URL is injected via Docker Compose environment, fallback for local dev
+const backendUrl = process.env.VITE_API_URL ?? 'http://localhost:8080'
+
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: '0.0.0.0',
+    host: '0.0.0.0',  // obrigatório para rodar dentro do container Docker
     port: 5173,
-    watch: {
-      usePolling: true,
+    proxy: {
+      '/api': {
+        target: backendUrl,
+        changeOrigin: true,
+      },
+      '/auth': {
+        target: backendUrl,
+        changeOrigin: true,
+      },
     },
   },
 })

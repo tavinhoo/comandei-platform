@@ -1,13 +1,15 @@
 package com.restaurant.commands.web.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class CommandDto {
 
     private Long id;
     private Integer tableNumber;
+    private String customerName;
     private String status;
-    private Double totalValue;
+    private BigDecimal totalValue;
     private LocalDateTime openTime;
     private LocalDateTime closeTime;
     private Long responsibleEmployeeId;
@@ -16,9 +18,10 @@ public class CommandDto {
     public CommandDto() {
     }
 
-    public CommandDto(Long id, Integer tableNumber, String status, Double totalValue, LocalDateTime openTime, LocalDateTime closeTime, Long responsibleEmployeeId, String responsibleEmployeeName) {
+    public CommandDto(Long id, Integer tableNumber, String customerName, String status, BigDecimal totalValue, LocalDateTime openTime, LocalDateTime closeTime, Long responsibleEmployeeId, String responsibleEmployeeName) {
         this.id = id;
         this.tableNumber = tableNumber;
+        this.customerName = customerName;
         this.status = status;
         this.totalValue = totalValue;
         this.openTime = openTime;
@@ -35,11 +38,15 @@ public class CommandDto {
         return tableNumber;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
     public String getStatus() {
         return status;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 

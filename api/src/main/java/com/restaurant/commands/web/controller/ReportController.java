@@ -1,5 +1,6 @@
 package com.restaurant.commands.web.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,7 +28,7 @@ public class ReportController {
     }
 
     @GetMapping("/faturamento")
-    public ResponseEntity<Double> revenue(
+    public ResponseEntity<BigDecimal> revenue(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
 
@@ -35,7 +36,9 @@ public class ReportController {
         LocalDateTime end = (to == null) ? LocalDateTime.now() : to.atTime(LocalTime.MAX);
 
         List<Command> closed = commandRepository.findByStatusAndCloseTimeBetween(CommandStatus.CLOSED, start, end);
-        double sum = closed.stream().mapToDouble(Command::getTotalValue).sum();
+        BigDecimal sum = closed.stream()
+                .map(Command::getTotalValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
         return ResponseEntity.ok(sum);
     }
 }

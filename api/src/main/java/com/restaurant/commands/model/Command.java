@@ -1,5 +1,6 @@
 package com.restaurant.commands.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Command {
     @Column(nullable = false)
     private Integer tableNumber;
 
+    private String customerName;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private CommandStatus status;
@@ -40,8 +43,8 @@ public class Command {
 
     private LocalDateTime closeTime;
 
-    @Column(nullable = false)
-    private Double totalValue = 0.0;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal totalValue = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "responsible_employee_id")
@@ -55,7 +58,7 @@ public class Command {
     }
 
     public Command(Long id, Integer tableNumber, CommandStatus status, LocalDateTime openTime, LocalDateTime closeTime,
-            Double totalValue, User responsibleEmployee, List<Order> orders) {
+            BigDecimal totalValue, User responsibleEmployee, List<Order> orders) {
         this.id = id;
         this.tableNumber = tableNumber;
         this.status = status;
@@ -82,6 +85,14 @@ public class Command {
         this.tableNumber = tableNumber;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public CommandStatus getStatus() {
         return status;
     }
@@ -106,11 +117,11 @@ public class Command {
         this.closeTime = closeTime;
     }
 
-    public Double getTotalValue() {
+    public BigDecimal getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Double totalValue) {
+    public void setTotalValue(BigDecimal totalValue) {
         this.totalValue = totalValue;
     }
 
